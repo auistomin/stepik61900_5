@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Stepik Delivery</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+</head>
+<body>
+
+  {% block content %}
+  {% endblock %}
+
+  <footer class="footer">
+    <nav class="container navbar navbar-light bg-light">
+      <ul class="navbar-nav mr-auto">
+        <p class="h4 nav-link"><a href="/" class="nav-link">Stepik Delivery</a></p>
+      </ul>
+      <a class="text-muted" href="https://github.com/auistomin/stepik61900_5" target="_blank">auistomin 2021</a>
+    </nav>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/jquery.maskedinput.min.js') }}"></script>
+  <script>
+    $('.mask-phone').mask('+7 (999) 999-99-99');
+  </script>
+
+</body>
+</html>

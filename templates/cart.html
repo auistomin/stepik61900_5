@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include "topmenu.html" %}
+  <main class="container">
+    <h1 class="h3 my-4">Корзина</h1>
+
+    {% if "delete" in request.path %}
+    <div class="alert alert-warning" role="alert">Блюдо удалено из корзины</div>
+    {% endif %}
+
+    {% if not session["is_auth"] %}
+    <div class="alert alert-warning" role="alert">Чтобы сделать заказ – <a href="/auth/">войдите</a> или <a href="/register/">зарегистрируйтесь</a></div>
+    {% endif %}
+
+    <div class="row mt-5">
+
+      {% if not 'cart' in session.keys() %}
+        <div style="width: 100%; text-align: center;">
+          <img src="{{ url_for('static', filename='img/cart_empty.jpg') }}" alt="" width="320">
+        </div>
+        <h4 class="mb-3 col-12 mb-5 center-block" align="center">Корзина пуста</h4>
+      {% else %}
+        <div class="col-4">
+          <form action="/cart/" method="POST">
+            {{ form.csrf_token() }}
+            <h4 class="">Ваши данные</h4>
+            <div class="md-4 order-md-1">
+              <div class="mt-3 mb-3">
+                {{ form.name.label(class_="mb-1 mt-2") }}
+                {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert"> {{ error }} </div>
+                {% endfor %}
+                {{ form.name(class_="form-control", placeholder="Введите ваше имя") }}
+              </div>
+            </div>
+            <div class="md-4 order-md-1">
+              <div class="mt-3 mb-3">
+                {{ form.address.label(class_="mb-1 mt-2") }}
+                {% for error in form.address.errors %}
+                <div class="alert alert-danger" role="alert"> {{ error }} </div>
+                {% endfor %}
+                {{ form.address(class_="form-control", placeholder="Введите ваш адрес") }}
+              </div>
+            </div>
+            <div class="md-4 order-md-1">
+              <div class="mt-3 mb-3">
+                {{ form.email.label(class_="mb-1 mt-2") }}
+                {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert"> {{ error }} </div>
+                {% endfor %}
+                {{ form.email(class_="form-control", placeholder="Введите e-mail") }}
+              </div>
+            </div>
+            <div class="md-4 order-md-1">
+              <div class="mt-3 mb-3">
+                {{ form.phone.label(class_="mb-1 mt-2") }}
+                {% for error in form.phone.errors %}
+                <div class="alert alert-danger" role="alert"> {{ error }} </div>
+                {% endfor %}
+                {{ form.phone(class_="form-control mask-phone", placeholder="Введите телефон") }}
+              </div>
+            </div>
+            <input type="hidden" value="{{ cart_sum }}" name="order_sum">
+            <input type="hidden" value="{{ session['cart'].keys() }}" name="order_cart">
+            {% if session["is_auth"] %}
+            {{ form.submit(class_="mt-3 mb-5 btn btn-danger") }}
+            {% endif %}
+          </form>
+        </div>
+
+
+      <div class="col-1"></div>
+      <div class="col-7">
+        <h4 class="mb-3 col-7 mb-5">{{ cart_quantity }} {{ cart_quantity | str_meals }} в корзине</h4>
+        <table class="table">
+          <tbody>
+            {% for key, value in session['cart'].items() %}
+            <tr>
+              <th scope="row">{{ value['title'] }}</th>
+              <td></td>
+              <td>{{ value['quantity'] }}</td>
+              <td>{{ value['sum'] }}</td>
+              <td><a class="text-danger" href="/cart/delete/{{ key }}/">Удалить</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <hr>
+        <p class="display-4 my-2 ">{{ cart_sum }} руб</p>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+{% endblock %}

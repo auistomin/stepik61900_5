@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include "topmenu.html" %}
+  <main class="container">
+    <section class="row">
+      <div class="col-12 col-lg-8">
+        <h1 class="h3 my-5">Личный кабинет. Заказы</h1>
+        {% for order in orders %}
+        <div class="mt-4 card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-7 col-lg-9">
+                  <span class="h5 font-weight-bold">{{ order.date | date_format }}</span>
+                  <span class="h5">- {{ order.sum }} P</span>
+                </div>
+              </div>
+            </li>
+            <div class="card-body">
+              <div class="row">
+                {% for item in order.stock %}
+                <p class="col-4 text-muted">{{ meals[item.meal_id] }}</p>
+                <p class="col-2 text-muted">{{ item.quantity }} шт</p>
+                <p class="col-6 text-muted">{{ item.sum }} руб</p>
+                {% endfor %}
+              </div>
+            </div>
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include "topmenu.html" %}
+  <main class="container mt-3">
+    <section class="my-5 jumbotron-fluid">
+      <div class="text-center">
+        <img class="ml-2" src="static/img/error404.jpg" alt="" width="400">
+        <div style="width: 100%; text-align: center;">
+          <img src="{{ url_for('static', filename='img/error404.jpg') }}" alt="" width="320">
+        </div>
+        <h1 class="h2 mt-5 m-2">Ой, страница не найдена</h1>
+        <p class="pt-4">Извините, но мы не нашли запрашиваемую страницу</p>
+        <p class="pt-4"><a href="/" class="btn btn-primary">Перейти на главную</a></p>
+      </div>
+    </section>
+  </main>
+{% endblock %}
